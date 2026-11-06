@@ -1,15 +1,14 @@
 module.exports = class Order {
     getPriceOfAvailableProducts() {
         let orderPrice = 0;
-        this.products.forEach((product, index) => {
-            if (!product.isAvailable) {
-                this.products.splice(index, 1);
-            }
-        });
-        for (const product of this.products) {
+        for (const product of this.getAvailableProducts()) {
             orderPrice += product.productPrice;
         }
         return orderPrice;
+    }
+
+    getAvailableProducts() {
+        return this.products.filter((product) => product.isAvailable);
     }
 
     setProducts(products) {

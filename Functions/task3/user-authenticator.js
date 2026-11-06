@@ -3,15 +3,12 @@ const sessionManager = require('./thirdparty/session-manager');
 
 const authenticator = {
     login: function (userName, password) {
-        return authenticator.loginUser(userService.getUserByName(userName), password);
-    },
-
-    loginUser: function (user, password) {
-        if (userService.isPasswordCorrect(user, password)) {
-            sessionManager.setCurrentUser(user);
-            return user;
+        const user = userService.getUserByName(userName);
+        if (!userService.isPasswordCorrect(user, password)) {
+            return null;
         }
-        return null;
+        sessionManager.setCurrentUser(user);
+        return user;
     },
 };
 
